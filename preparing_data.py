@@ -146,13 +146,28 @@ def convertTimestringToTimedate(mydf):
     mydf['OBJECT2_TIME_LASTOB_END']=mydf['OBJECT2_TIME_LASTOB_END'].apply(lambda x: dt.datetime.strptime(x, date_format))
 
     return mydf
+##### CONVERT PC to LOG10
+def convertPCto10logaritmicscale(mydf):
+    mydf['COLLISSION_PROBABILITY']=mydf['COLLISSION_PROBABILITY'].apply(lambda x: np.log10(x))
+    return mydf
 
 
 #####
 def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
     '''
+    Goal
+    ----------
     This function convert all the row events to a single row event dataframe.
     Default parameters take the last 6 events: 5 for training and the collision probability of the last one.
+    
+    Parameters
+    ----------
+    mydf :              dataframe with one event per row
+    number_of_events :  int
+
+    Returns
+    ------
+    dataframe :         single row event dataframe
     '''
     #flag variable
     flag=0
@@ -170,7 +185,12 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
 
             #Convert all CDMs to single row event
             #Last CDM must be saved for TARGET PC
-            single_row_event=pd.concat([one_event.iloc[-6],one_event.iloc[-5],one_event.iloc[-4],one_event.iloc[-3],one_event.iloc[-2]],axis=0).to_frame().T
+            single_row_event=pd.concat([one_event.iloc[-6],
+                                        one_event.iloc[-5],
+                                        one_event.iloc[-4],
+                                        one_event.iloc[-3],
+                                        one_event.iloc[-2],
+                                        one_event.iloc[-1,11:12]],axis=0).to_frame().T
 
             #Rename columns with sufix _1,_2,_3,_4
             cols=pd.Series(single_row_event.columns)
@@ -189,6 +209,20 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
                 flag=1
             else:
                 data=data.append(single_row_event)
+    #### this columns must be deleted.
+    data.drop([ 'TCA_1',
+                'TCA_2',
+                'TCA_3',
+                'TCA_4',
+                'event_id_1',
+                'event_id_2',
+                'event_id_3',
+                'event_id_4'
+                ], inplace=True, axis=1)
+
+    data.rename(columns = {"COLLISSION_PROBABILITY_5": "COLLISSION_PROBABILITY_TARGET"}, 
+          inplace = True)
+
     print("Dataframe successfully created...\n Finished at: {}".format(datetime.now(tz=None)))
     #Save dataframe to file
     filename="full_dataframe_{}.pkl".format(datetime.now().strftime("%Y%m%d_%H%M%S"))
