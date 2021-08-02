@@ -146,6 +146,24 @@ def convertTimestringToTimedate(mydf):
     mydf['OBJECT2_TIME_LASTOB_END']=mydf['OBJECT2_TIME_LASTOB_END'].apply(lambda x: dt.datetime.strptime(x, date_format))
 
     return mydf
+
+##### CONVERT TIMEDATE COLUMNS TO TIMERANGE IN DAYS
+def convertTimedateToDaysRange(mydf):
+    """
+    This function convert datetime columns to range in days.
+    """
+    mydf['__time_to_tca']=(mydf['TCA'] - mydf['CREATION_DATE']).dt.total_seconds()/(3600*24.)
+    mydf['OBJECT1_TIME_LASTOB_START']=(mydf['CREATION_DATE']-mydf['OBJECT1_TIME_LASTOB_START']).dt.total_seconds()/(3600*24.)
+    mydf['OBJECT1_TIME_LASTOB_END']=(mydf['CREATION_DATE']-mydf['OBJECT1_TIME_LASTOB_END']).dt.total_seconds()/(3600*24.)
+    mydf['OBJECT2_TIME_LASTOB_START']=(mydf['CREATION_DATE']-mydf['OBJECT2_TIME_LASTOB_START']).dt.total_seconds()/(3600*24.)
+    mydf['OBJECT2_TIME_LASTOB_END']=(mydf['CREATION_DATE']-mydf['OBJECT2_TIME_LASTOB_END']).dt.total_seconds()/(3600*24.)
+
+    mydf.drop(['TCA',
+                'CREATION_DATE'
+                ], inplace=True, axis=1)
+
+    return mydf
+
 ##### CONVERT PC to LOG10
 def convertPCto10logaritmicscale(mydf):
     mydf['COLLISSION_PROBABILITY']=mydf['COLLISSION_PROBABILITY'].apply(lambda x: np.log10(x))
@@ -210,10 +228,10 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
             else:
                 data=data.append(single_row_event)
     #### this columns must be deleted.
-    data.drop([ 'TCA_1',
-                'TCA_2',
-                'TCA_3',
-                'TCA_4',
+    data.drop([ #'TCA_1',
+                #'TCA_2',
+                #'TCA_3',
+                #'TCA_4',
                 'event_id_1',
                 'event_id_2',
                 'event_id_3',
