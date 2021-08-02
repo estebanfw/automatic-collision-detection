@@ -231,3 +231,42 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
     print("Dataframe was successfully saved at working directory: {}".format(os.getcwd()))
     return data
         
+
+def addCorrelationColumns(mydf):
+        
+    #CORRELATION MATRIX OBJECT1
+    mydf['OBJECT1_CORR_CT_R'] = mydf['OBJECT1_CT_R'] / (mydf['OBJECT1_CR_R']**(1/2) * mydf['OBJECT1_CT_T']**(1/2))
+    mydf['OBJECT1_CORR_CN_R'] = mydf['OBJECT1_CN_R'] / (mydf['OBJECT1_CN_N']**(1/2) * mydf['OBJECT1_CR_R']**(1/2))
+    mydf['OBJECT1_CORR_CN_T'] = mydf['OBJECT1_CN_T'] / (mydf['OBJECT1_CN_N']**(1/2) * mydf['OBJECT1_CT_T']**(1/2))
+    mydf['OBJECT1_CORR_CRDOT_R'] = mydf['OBJECT1_CRDOT_R'] / (mydf['OBJECT1_CRDOT_RDOT']**(1/2) * mydf['OBJECT1_CR_R']**(1/2))
+    mydf['OBJECT1_CORR_CRDOT_T'] = mydf['OBJECT1_CRDOT_T'] / (mydf['OBJECT1_CRDOT_RDOT']**(1/2) * mydf['OBJECT1_CT_T']**(1/2))
+    mydf['OBJECT1_CORR_CRDOT_N'] = mydf['OBJECT1_CRDOT_N'] / (mydf['OBJECT1_CRDOT_RDOT']**(1/2) * mydf['OBJECT1_CN_N']**(1/2))
+    mydf['OBJECT1_CORR_CTDOT_R'] = mydf['OBJECT1_CTDOT_R'] / (mydf['OBJECT1_CTDOT_TDOT']**(1/2) * mydf['OBJECT1_CR_R']**(1/2))
+    mydf['OBJECT1_CORR_CTDOT_T'] = mydf['OBJECT1_CTDOT_T'] / (mydf['OBJECT1_CTDOT_TDOT']**(1/2) * mydf['OBJECT1_CT_T']**(1/2))
+    mydf['OBJECT1_CORR_CTDOT_N'] = mydf['OBJECT1_CTDOT_N'] / (mydf['OBJECT1_CTDOT_TDOT']**(1/2) * mydf['OBJECT1_CN_N']**(1/2))
+    mydf['OBJECT1_CORR_CTDOT_RDOT'] = mydf['OBJECT1_CTDOT_RDOT'] / (mydf['OBJECT1_CTDOT_TDOT']**(1/2) * mydf['OBJECT1_CRDOT_RDOT']**(1/2))
+    mydf['OBJECT1_CORR_CNDOT_R'] = mydf['OBJECT1_CNDOT_R'] / (mydf['OBJECT1_CNDOT_NDOT']**(1/2) * mydf['OBJECT1_CR_R']**(1/2))
+    mydf['OBJECT1_CORR_CNDOT_T'] = mydf['OBJECT1_CNDOT_T'] /  (mydf['OBJECT1_CNDOT_NDOT']**(1/2) * mydf['OBJECT1_CT_T']**(1/2))
+    mydf['OBJECT1_CORR_CNDOT_N'] = mydf['OBJECT1_CNDOT_N'] /  (mydf['OBJECT1_CNDOT_NDOT']**(1/2) * mydf['OBJECT1_CN_N']**(1/2))
+    mydf['OBJECT1_CORR_CNDOT_RDOT'] = mydf['OBJECT1_CNDOT_RDOT'] / (mydf['OBJECT1_CNDOT_NDOT']**(1/2) * mydf['OBJECT1_CRDOT_RDOT']**(1/2))
+    mydf['OBJECT1_CORR_CNDOT_TDOT'] = mydf['OBJECT1_CNDOT_TDOT'] / (mydf['OBJECT1_CNDOT_NDOT']**(1/2) * mydf['OBJECT1_CTDOT_TDOT']**(1/2))
+
+    #CORRELATION MATRIX OBJECT2
+    mydf['OBJECT2_CORR_CT_R'] = mydf['OBJECT2_CT_R'] / (mydf['OBJECT2_CR_R']**(1/2) * mydf['OBJECT2_CT_T']**(1/2))
+    mydf['OBJECT2_CORR_CN_R'] = mydf['OBJECT2_CN_R'] / (mydf['OBJECT2_CN_N']**(1/2) * mydf['OBJECT2_CR_R']**(1/2))
+    mydf['OBJECT2_CORR_CN_T'] = mydf['OBJECT2_CN_T'] / (mydf['OBJECT2_CN_N']**(1/2) * mydf['OBJECT2_CT_T']**(1/2))
+    mydf['OBJECT2_CORR_CRDOT_R'] = mydf['OBJECT2_CRDOT_R'] / (mydf['OBJECT2_CRDOT_RDOT']**(1/2) * mydf['OBJECT2_CR_R']**(1/2))
+    mydf['OBJECT2_CORR_CRDOT_T'] = mydf['OBJECT2_CRDOT_T'] / (mydf['OBJECT2_CRDOT_RDOT']**(1/2) * mydf['OBJECT2_CT_T']**(1/2))
+    mydf['OBJECT2_CORR_CRDOT_N'] = mydf['OBJECT2_CRDOT_N'] / (mydf['OBJECT2_CRDOT_RDOT']**(1/2) * mydf['OBJECT2_CN_N']**(1/2))
+    mydf['OBJECT2_CORR_CTDOT_R'] = mydf['OBJECT2_CTDOT_R'] / (mydf['OBJECT2_CTDOT_TDOT']**(1/2) * mydf['OBJECT2_CR_R']**(1/2))
+    mydf['OBJECT2_CORR_CTDOT_T'] = mydf['OBJECT2_CTDOT_T'] / (mydf['OBJECT2_CTDOT_TDOT']**(1/2) * mydf['OBJECT2_CT_T']**(1/2))
+    mydf['OBJECT2_CORR_CTDOT_N'] = mydf['OBJECT2_CTDOT_N'] / (mydf['OBJECT2_CTDOT_TDOT']**(1/2) * mydf['OBJECT2_CN_N']**(1/2))
+    mydf['OBJECT2_CORR_CTDOT_RDOT'] = mydf['OBJECT2_CTDOT_RDOT'] / (mydf['OBJECT2_CTDOT_TDOT']**(1/2) * mydf['OBJECT2_CRDOT_RDOT']**(1/2))
+    mydf['OBJECT2_CORR_CNDOT_R'] = mydf['OBJECT2_CNDOT_R'] / (mydf['OBJECT2_CNDOT_NDOT']**(1/2) * mydf['OBJECT2_CR_R']**(1/2))
+    mydf['OBJECT2_CORR_CNDOT_T'] = mydf['OBJECT2_CNDOT_T'] /  (mydf['OBJECT2_CNDOT_NDOT']**(1/2) * mydf['OBJECT2_CT_T']**(1/2))
+    mydf['OBJECT2_CORR_CNDOT_N'] = mydf['OBJECT2_CNDOT_N'] /  (mydf['OBJECT2_CNDOT_NDOT']**(1/2) * mydf['OBJECT2_CN_N']**(1/2))
+    mydf['OBJECT2_CORR_CNDOT_RDOT'] = mydf['OBJECT2_CNDOT_RDOT'] / (mydf['OBJECT2_CNDOT_NDOT']**(1/2) * mydf['OBJECT2_CRDOT_RDOT']**(1/2))
+    mydf['OBJECT2_CORR_CNDOT_TDOT'] = mydf['OBJECT2_CNDOT_TDOT'] / (mydf['OBJECT2_CNDOT_NDOT']**(1/2) * mydf['OBJECT2_CTDOT_TDOT']**(1/2))
+
+    return mydf
+
