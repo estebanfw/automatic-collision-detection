@@ -1,6 +1,6 @@
 import pandas as pd
 import datetime as dt
-from datetime import datetime, timedelta
+#from datetime import datetime, timedelta
 import numpy as np
 import os
 
@@ -189,7 +189,8 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
     '''
     #flag variable
     flag=0
-    print("Creating dataframe...\n Starting at: {}".format(datetime.now(tz=None)))
+    timestarted=dt.datetime.now(tz=None)
+    print("Creating dataframe...\n Starting at: {}".format(timestarted))
     for i in range(number_of_events):
         #create dataframe for each event
         one_event=mydf[(mydf["event_id"]==i)]
@@ -240,10 +241,15 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
 
     data.rename(columns = {"COLLISSION_PROBABILITY_5": "COLLISSION_PROBABILITY_TARGET"}, 
           inplace = True)
-
-    print("Dataframe successfully created...\n Finished at: {}".format(datetime.now(tz=None)))
+    timefinished=dt.datetime.now(tz=None)
+    time_of_computation=timefinished-timestarted
+    h=int(time_of_computation.total_seconds()/3600)
+    min=int(time_of_computation.total_seconds()/60)
+    sec=int(time_of_computation.seconds)
+    print("Dataframe successfully created...\n Finished at: {}".format(timefinished))
+    print("Total time elapsed: {}h {}min {}sec.".format(h,min,sec))
     #Save dataframe to file
-    filename="full_dataframe_{}.pkl".format(datetime.now().strftime("%Y%m%d_%H%M%S"))
+    filename="full_dataframe_{}.pkl".format(dt.datetime.now().strftime("%Y%m%d_%H%M%S"))
     print("Saving dataframe for future usage filename = {}".format(filename))
     data.to_pickle(filename)
     print("Dataframe was successfully saved at working directory: {}".format(os.getcwd()))
