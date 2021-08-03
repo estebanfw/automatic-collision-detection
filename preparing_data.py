@@ -208,7 +208,7 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
                                         one_event.iloc[-4],
                                         one_event.iloc[-3],
                                         one_event.iloc[-2],
-                                        one_event.iloc[-1,11:12]],axis=0).to_frame().T
+                                        one_event.iloc[-1,9:10]],axis=0).to_frame().T
 
             #Rename columns with sufix _1,_2,_3,_4
             cols=pd.Series(single_row_event.columns)
