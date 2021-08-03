@@ -229,24 +229,27 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
             else:
                 data=data.append(single_row_event)
     #### this columns must be deleted.
-    data.drop([ #'TCA_1',
-                #'TCA_2',
-                #'TCA_3',
-                #'TCA_4',
-                'event_id_1',
+    data.drop([ 'event_id_1',
                 'event_id_2',
                 'event_id_3',
                 'event_id_4'
                 ], inplace=True, axis=1)
-
+    #Rename this column because it is going to be used as target of the supervised learning
     data.rename(columns = {"COLLISSION_PROBABILITY_5": "COLLISSION_PROBABILITY_TARGET"}, 
           inplace = True)
+    #Reset index of dataframe
+    data.reset_index(inplace=True)
+    data.drop(['index'], inplace=True, axis=1)
+
+    #Output at the end of computation
     timefinished=dt.datetime.now(tz=None)
     time_of_computation=timefinished-timestarted
     h=int(time_of_computation.total_seconds()/3600)
     min=int(time_of_computation.total_seconds()/60)
-    sec=int(time_of_computation.seconds)
-    print("Dataframe successfully created...\n Finished at: {}".format(timefinished))
+    sec=int(time_of_computation.total_seconds()%60)
+    print("Dataframe successfully created...")
+    print("Dimension: {} x {}".format(data.shape[0],data.shape[1])) 
+    print("Finished at: {}".format(timefinished))
     print("Total time elapsed: {}h {}min {}sec.".format(h,min,sec))
     #Save dataframe to file
     filename="full_dataframe_{}.pkl".format(dt.datetime.now().strftime("%Y%m%d_%H%M%S"))
