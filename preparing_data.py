@@ -297,6 +297,48 @@ def addCorrelationColumns(mydf):
 
     return mydf
 
+def deleteCovarianceNonDiagonalElements(mydf):
+
+    mydf.drop([ ############# OBJECT 1 #############
+                'OBJECT1_CT_R',         #1  
+                'OBJECT1_CN_R',         #2
+                'OBJECT1_CN_T',         #3
+                'OBJECT1_CRDOT_R',      #4
+                'OBJECT1_CRDOT_T',      #5
+                'OBJECT1_CRDOT_N',      #6
+                'OBJECT1_CTDOT_R',      #7
+                'OBJECT1_CTDOT_T',      #8
+                'OBJECT1_CTDOT_N',      #9
+                'OBJECT1_CTDOT_RDOT',   #10
+                'OBJECT1_CNDOT_R',      #11
+                'OBJECT1_CNDOT_T',      #12
+                'OBJECT1_CNDOT_N',      #13
+                'OBJECT1_CNDOT_RDOT',   #14
+                'OBJECT1_CNDOT_TDOT',   #15
+
+                ############# OBJECT 2 #############
+                'OBJECT2_CT_R',         #1  
+                'OBJECT2_CN_R',         #2
+                'OBJECT2_CN_T',         #3
+                'OBJECT2_CRDOT_R',      #4
+                'OBJECT2_CRDOT_T',      #5
+                'OBJECT2_CRDOT_N',      #6
+                'OBJECT2_CTDOT_R',      #7
+                'OBJECT2_CTDOT_T',      #8
+                'OBJECT2_CTDOT_N',      #9
+                'OBJECT2_CTDOT_RDOT',   #10
+                'OBJECT2_CNDOT_R',      #11
+                'OBJECT2_CNDOT_T',      #12
+                'OBJECT2_CNDOT_N',      #13
+                'OBJECT2_CNDOT_RDOT',   #14
+                'OBJECT2_CNDOT_TDOT',   #15
+
+                ], inplace=True, axis=1)
+
+    return mydf
+
+
+
 def adjusted_r2_score(preds, dtrain):
             labels = dtrain.get_label()
             n=dtrain.num_data()
