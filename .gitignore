@@ -4,3 +4,5 @@ data
 venv
 *swp
 output
+opt_parameters_bo
+dataframe
