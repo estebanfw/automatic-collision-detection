@@ -257,7 +257,91 @@ def CreateSingleRowEventDataFrame(mydf,number_of_events,progress_indicator=500):
     data.to_pickle(filename)
     print("Dataframe was successfully saved at working directory: {}".format(os.getcwd()))
     return data
+
+
+def CreateSingleRowEventDataFrame3(mydf,number_of_events,progress_indicator=500):
+    '''
+    Goal
+    ----------
+    This function convert all the row events to a single row event dataframe.
+    Default parameters take the last 4 events: 5 for training and the collision probability of the last one.
+    
+    Parameters
+    ----------
+    mydf :              dataframe with one event per row
+    number_of_events :  int
+
+    Returns
+    ------
+    dataframe :         single row event dataframe
+    '''
+    #flag variable
+    flag=0
+    timestarted=dt.datetime.now(tz=None)
+    print("Creating dataframe...\n Starting at: {}".format(timestarted))
+    for i in range(number_of_events):
+        #create dataframe for each event
+        one_event=mydf[(mydf["event_id"]==i)]
         
+        #filter only those that have more than 6 CDMs
+        if len(one_event)>=4:
+
+            if i%progress_indicator==0:
+                print("Computing id_event number: {}".format(i))
+            #print(one_event.iloc[0,0])
+
+            #Convert all CDMs to single row event
+            #Last CDM must be saved for TARGET PC
+            single_row_event=pd.concat([one_event.iloc[-4],
+                                        one_event.iloc[-3],
+                                        one_event.iloc[-2],
+                                        one_event.iloc[-1,9:10]],axis=0).to_frame().T
+
+            #Rename columns with sufix _1,_2
+            cols=pd.Series(single_row_event.columns)
+            for dup in single_row_event.columns[single_row_event.columns.duplicated(keep=False)]: 
+                cols[single_row_event.columns.get_loc(dup)] = ([dup + '_' + str(d_idx) 
+                                                                if d_idx != 0 
+                                                                else dup 
+                                                                for d_idx in range(single_row_event.columns.get_loc(dup).sum())]
+                                                                )
+            single_row_event.columns=cols
+
+            #Append single row events in single dataframe: one row for each collision event
+            #flag = 0 -> first pass of loop; flag>0 following passes 
+            if flag==0:
+                data=single_row_event
+                flag=1
+            else:
+                data=data.append(single_row_event)
+    #### this columns must be deleted.
+    data.drop([ 'event_id_1',
+                'event_id_2'
+                ], inplace=True, axis=1)
+    #Rename this column because it is going to be used as target of the supervised learning
+    data.rename(columns = {"COLLISSION_PROBABILITY_3": "COLLISSION_PROBABILITY_TARGET"}, 
+          inplace = True)
+    #Reset index of dataframe
+    data.reset_index(inplace=True)
+    data.drop(['index'], inplace=True, axis=1)
+
+    #Output at the end of computation
+    timefinished=dt.datetime.now(tz=None)
+    time_of_computation=timefinished-timestarted
+    h=int(time_of_computation.total_seconds()/3600)
+    min=int(time_of_computation.total_seconds()/60)
+    sec=int(time_of_computation.total_seconds()%60)
+    print("Dataframe successfully created...")
+    print("Dimension: {} x {}".format(data.shape[0],data.shape[1])) 
+    print("Finished at: {}".format(timefinished))
+    print("Total time elapsed: {}h {}min {}sec.".format(h,min,sec))
+    #Save dataframe to file
+    filename="./dataframe/full_dataframe_{}.pkl".format(dt.datetime.now().strftime("%Y%m%d_%H%M%S"))
+    print("Saving dataframe for future usage filename = {}".format(filename))
+    data.to_pickle(filename)
+    print("Dataframe was successfully saved at working directory: {}".format(os.getcwd()))
+    return data
+
 
 def addCorrelationColumns(mydf):
         
