@@ -6,3 +6,4 @@ venv
 output
 opt_parameters_bo
 dataframe
+validation-results
