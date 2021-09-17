@@ -4,3 +4,4 @@ lightgbm
 sklearn
 warnings
 bayes_opt
+black
