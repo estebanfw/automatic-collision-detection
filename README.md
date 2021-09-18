@@ -1,5 +1,7 @@
 ## Setting up environment
 
+*This section is explained assuming OS is a Linux Distribution*
+
 ### Check python version
 
 ~~~
