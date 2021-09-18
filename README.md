@@ -46,8 +46,3 @@ Install required libraries.
 pip install -r requirements.txt
 ~~~
 To list all the installed packages in the virtual environment: `pip freeze`
-
-Finally create these folders:
-~~~
-mkdir data dataframe validation-results
-~~~
