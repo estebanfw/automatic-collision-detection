@@ -7,6 +7,8 @@ venv
 !/data/instructions.txt
 !/opt_parameters_bo
 /opt_parameters_bo/*
+!/opt_parameters_bo/param_lgb_adjusted_r2_only_risky_events.pkl
+!/opt_parameters_bo/param_lgb_r2_only_risky_events.pkl
 !/dataframe
 /dataframe/*
 !/dataframe/df_only_risky_events.pkl
