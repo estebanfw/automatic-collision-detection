@@ -6,7 +6,7 @@
 python --version
 ~~~
 
-### Check or install PIP
+### PIP (Package Installer for Python)
 
 Check if PIP is already installed.
 ~~~
