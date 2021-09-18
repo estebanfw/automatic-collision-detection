@@ -1,8 +1,8 @@
-data
 *.pkl
 *.pyc
 venv
 *swp
+data
 output
 opt_parameters_bo
 dataframe
