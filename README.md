@@ -1,6 +1,6 @@
 ## Setting up environment
 
-*This section is explained assuming OS is a Linux Distribution*
+*This section is explained assuming the Operating System is a Linux Distribution*
 
 ### Check python version
 
