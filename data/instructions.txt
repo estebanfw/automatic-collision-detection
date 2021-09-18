@@ -1,0 +1,5 @@
+In this folder download Kelvin's Challenge open dataset.
+
+Link: https://kelvins.esa.int/collision-avoidance-challenge/data/
+
+Uncompress file and maintain txt files.

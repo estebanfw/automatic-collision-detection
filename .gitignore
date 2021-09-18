@@ -4,6 +4,7 @@ venv
 *swp
 !/data
 /data/*
+!/data/instructions.txt
 !/opt_parameters_bo
 /opt_parameters_bo/*
 !/dataframe
