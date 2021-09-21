@@ -9,3 +9,4 @@ ipykernel
 plotly
 bokeh
 selenium
+holoviews
