@@ -1,51 +1,38 @@
-## Setting up environment
-
-*This section is explained assuming the Operating System is a Linux Distribution*
-
-### Check python version
-
-~~~
-python --version
-~~~
-
-### PIP (Package Installer for Python)
-
-Check if PIP is already installed.
-~~~
-pip --version
-~~~ 
-
-In case it is not installed, update repository and install it.
-~~~
-sudo apt-get update \
-sudo apt-get install python3-pip
-~~~
-
-### Create virtual environment
-
-First install `virtualenv` package.
-~~~
-pip install virtualenv
-~~~
-
-Clone Github repository in your desired directory.
+### Clone Github repository in your desired directory.
 ~~~
 git clone https://github.com/estebanfw/automatic-collision-detection.git
 ~~~
 
-Create virtual environment.
+## Setting up environment
+
+*This section is explained assuming the Operating System is a Linux Distribution*
+
+Create environment
 ~~~
-python -m venv venv
+conda create --prefix ./envs
+~~~ 
+Activate environment.
 ~~~
-Activate virtual environment.
+conda activate ./envs
 ~~~
-source venv/bin/activate
+
+### Install packages with pip
+
+Once you have activated the conda environment, install pip:
 ~~~
-Install required libraries.
+conda install pip
+~~~
+
+Install packages from `requirements.txt`
 ~~~
 pip install -r requirements.txt
 ~~~
-To list all the installed packages in the virtual environment: `pip freeze`
+
+### Install third party bokeh plotting features (optional)
+
+~~~
+conda install selenium geckodriver firefox -c conda-forge
+~~~
 
 ## Files structure
 
