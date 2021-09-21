@@ -1,4 +1,4 @@
-pandas==1.0.1
+pandas
 numpy
 lightgbm
 sklearn
@@ -6,3 +6,6 @@ black
 bayesian-optimization
 jupyter
 ipykernel
+plotly
+bokeh
+selenium
