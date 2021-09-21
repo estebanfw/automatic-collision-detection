@@ -17,3 +17,4 @@ venv
 /validation-results/*
 !/validation-results/r_evalm-lgb_adjusted_r2_hp_metric-_regression_L2.txt
 !/validation-results/r_evalm-lgb_r2_hp_metric-_regression_L2.txt
+envs
