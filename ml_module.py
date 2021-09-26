@@ -40,7 +40,6 @@ def bayesian_opt_lgbm(
     n_iters: int
         Total number of iterations
     random_state: int
-        ?
     seed: int
         Initial number to compute random number to startup calculation
     num_iterations: int
@@ -192,6 +191,8 @@ def compare_true_vs_prediction(df_true, df_pred):
 def create_and_validate_model(
     X,
     y,
+    X_test,
+    Y_test,
     init_iter=5,
     n_iters=500,
     random_state=77,
@@ -208,12 +209,15 @@ def create_and_validate_model(
         Train dataset
     y : target dataframe
         Values to be predicted
+    X_test : dataframe
+        Dataframe used to test model
+    y_test : target dataframe
+        Values to be predicted on the testing dataframe
     init_iter: int
         Initial number of iterations
     n_iters: int
         Total number of iterations
     random_state: int
-        ?
     seed: int
         Initial number to compute random number to startup calculation
     num_iterations: int
@@ -327,7 +331,7 @@ def create_and_validate_model(
 
 
 # Function to load a previously created model and validate it
-def load_and_validate_model(name, X, y, hp_metric="regression_L2"):
+def load_and_validate_model(name, X, y, X_test, Y_test, hp_metric="regression_L2"):
     """Loads a model LGBM regression model and validates it with the testing dataset
 
     Parameters
@@ -338,6 +342,10 @@ def load_and_validate_model(name, X, y, hp_metric="regression_L2"):
         Train dataset
     y : target dataframe
         Values to be predicted
+    X_test : dataframe
+        Dataframe used to test model
+    Y_test : target dataframe
+        Values to be predicted on the testing dataframe
     hp_metric: "regression_L2"
         Metric used to optimize model after the computation. It is recommended to use the one corresponding with the evaluation metric used to create the model at first place
 

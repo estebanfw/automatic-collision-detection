@@ -99,7 +99,7 @@ for i in range(4,30):
 data=aux
 
 
-filename="df_equally_distributed_full_range_{}.pkl".format(dt.datetime.now().strftime("%Y%m%d_%H%M%S"))
+filename="./dataframe/df_equally_distributed_full_range_{}.pkl".format(dt.datetime.now().strftime("%Y%m%d_%H%M%S"))
 print("Saving dataframe for future usage filename = {}".format(filename))
 data.to_pickle(filename)
 

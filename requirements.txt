@@ -2,6 +2,11 @@ pandas
 numpy
 lightgbm
 sklearn
-warnings
-bayes_opt
 black
+bayesian-optimization
+jupyter
+ipykernel
+plotly
+bokeh
+selenium
+holoviews
