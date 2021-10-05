@@ -38,7 +38,7 @@ conda install selenium geckodriver firefox -c conda-forge
 
 * `create_dataframe.py` makes all the ETL process to get a clean dataset for building the machine learning module. Output dataset of this script consist only on risky events (collision probabilities greater than 10^-6)
 * `preparing_data.py` contains all the functions needed in the above script to do the ETL.
-* `full_range.py`makes all the ETL to build a dataset with colision probabilities in al the range.
+* `full_range.py`makes all the ETL to build a dataset with colision probabilities in all the range.
 * `ml_module.py` contains all the functions needed for building and/or loading the Light GBM model.
 * `bayesian opt` python notebook that uses as input the clean dataset and the functions of the `ml_module` to build the Machine Learning Model and view the results.
 
