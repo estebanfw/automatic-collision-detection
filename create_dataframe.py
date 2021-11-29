@@ -1,8 +1,8 @@
-#############################################################################################################
+############################################################################
 # SCRIPT TO CREATE DATASET INPUT FOR THE LIGHT GBM MODEL
 # IT SAMPLES AN EQUALLY DISTRIBUTED DATAFRAME CONDISERING ONLY RISKY EVENTS 
 # RISKY EVENTS ARE THOSE THAT COLLISSION_PROBABILITY IS GREATER THAN 10 E-6
-##############################################################################################################
+#############################################################################
 import pandas as pd
 import datetime as dt
 import numpy as np
@@ -10,10 +10,10 @@ import os
 
 from preparing_data import *
 
-print("---------------------------------------------------------------------------------------------------")
+print("------------------------------------------------------")
 print("This script creates the dataframe needed as input for the computation of the Machine Learning Model")
-print("--------------------------------------------------------------------------------------------------- \n")
-print("Loading full Kelvin's Challenge dataframe..........................................................")
+print("----------------------------------------------------- \n")
+print("Loading full Kelvin's Challenge dataframe...............")
 print("............................................")
 df=pd.read_csv("./data/train_data.csv")
 
@@ -67,9 +67,9 @@ cdm.sort_values(by=['event_id', '__time_to_tca'],ascending=[True, False],inplace
 
 
 # FEATURE ENGINEERING
-print("---------------------------------------------------------------------------------------------------")
-print("--------------------------------------- FEATURE ENGINEERING ---------------------------------------")
-print("---------------------------------------------------------------------------------------------------")
+print("-----------------------------------------------------------")
+print("------------- FEATURE ENGINEERING -------------------------")
+print("-----------------------------------------------------------")
 print("FROM MAIN VARIABLES MISS_DISTANCE and COLLISSION_PROBABILITY...")
 print("Computing...")
 print("moving average with window of three elements...")
