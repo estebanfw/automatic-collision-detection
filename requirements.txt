@@ -10,3 +10,5 @@ plotly
 bokeh
 selenium
 holoviews
+keras
+tensorflow
