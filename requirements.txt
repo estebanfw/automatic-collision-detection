@@ -12,3 +12,5 @@ selenium
 holoviews
 keras
 tensorflow
+matplotlib
+seaborn
