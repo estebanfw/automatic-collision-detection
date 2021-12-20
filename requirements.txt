@@ -2,6 +2,7 @@ pandas
 numpy
 lightgbm
 sklearn
+scikit-optimize
 black
 bayesian-optimization
 jupyter
