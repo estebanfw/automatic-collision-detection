@@ -38,12 +38,12 @@ def bayesian_opt_lgbm(
     init_iter: int
         Initial number of iterations
     n_iters: int
-        Total number of iterations
+        Total number of iterations of the Bayesian Optimization
     random_state: int
     seed: int
         Initial number to compute random number to startup calculation
     num_iterations: int
-        Number of iterations per loop
+        Number of trees
     evalm: lgb_r2 lgb_rmse lgb_mae lgb_adjusted_r2
         String use to indicate which metric will be used as objective of the optimization
 
@@ -125,9 +125,9 @@ def bayesian_opt_lgbm(
         # Domain space-- Range of hyperparameters
 
     pds = {
-        "num_leaves": (60, 120),
+        "num_leaves": (2, 120),
         "feature_fraction": (0.1, 0.9),
-        "bagging_fraction": (0.7, 1),
+        "bagging_fraction": (1, 1),
         "max_depth": (7, 15),
         "learning_rate": (0.001, 0.05),
         "min_split_gain": (0.001, 0.1),
@@ -141,8 +141,8 @@ def bayesian_opt_lgbm(
 
     # Output dictionary
     output_dict = optimizer.max["params"]
-    output_dict["num_iterations"] = num_iterations
-    output_dict["n_estimators"] = n_iters
+    output_dict["num_iterations"] = n_iters #of bayesian optimization
+    output_dict["n_estimators"] = num_iterations  #number of trees
 
     # Save dictionary to file
     filename = "./opt_parameters_bo/param_{}_{}.pkl".format(
@@ -153,38 +153,6 @@ def bayesian_opt_lgbm(
     a_file.close()
 
     return optimizer, output_dict
-
-
-# Function to compare true vs predicted values
-def compare_true_vs_prediction(df_true, df_pred):
-    """Compares results of the prediction vs true values
-
-    Parameters
-    ----------
-    df_true : dataframe
-        Dataframe with true values
-    df_pred : target dataframe
-        Dataframe with predicted values
-
-    Returns
-    -------
-    dataframe
-        Dataframe comparing true values vs predicted values
-    """
-    aux_y = pd.DataFrame(df_true)
-    aux_y.reset_index(inplace=True)
-    aux_y.drop(["index"], inplace=True, axis=1)
-    aux_y_pred = pd.DataFrame(df_pred)
-    aux_y_pred.reset_index(inplace=True)
-    aux_y_pred.drop(["index"], inplace=True, axis=1)
-    frames = [aux_y, aux_y_pred]
-    result = pd.concat(frames, axis=1)
-    result.columns = ["y_true", "y_predicted"]
-    result["y_true_10"] = 10 ** result.y_true
-    result["y_predicted_10"] = 10 ** result.y_predicted
-    result[result["y_true_10"] > 0.00001]
-    result[result["y_true_10"] > 0.0001]
-    return result
 
 
 # Function to create and validate a new model
@@ -216,12 +184,12 @@ def create_and_validate_model(
     init_iter: int
         Initial number of iterations
     n_iters: int
-        Total number of iterations
+        Total number of iterations of the Bayesian Optimization
     random_state: int
     seed: int
         Initial number to compute random number to startup calculation
     num_iterations: int
-        Number of iterations per loop
+        Number of trees
     evalm: lgb_r2 lgb_rmse lgb_mae lgb_adjusted_r2
         String use to indicate which metric will be used as objective of the optimization
     hp_metric: "regression_L2"
@@ -449,3 +417,34 @@ def load_and_validate_model(name, X, y, X_test, Y_test, hp_metric="regression_L2
     outF.close()
 
     return gbm, df_results
+
+# Function to compare true vs predicted values
+def compare_true_vs_prediction(df_true, df_pred):
+    """Compares results of the prediction vs true values
+
+    Parameters
+    ----------
+    df_true : dataframe
+        Dataframe with true values
+    df_pred : target dataframe
+        Dataframe with predicted values
+
+    Returns
+    -------
+    dataframe
+        Dataframe comparing true values vs predicted values
+    """
+    aux_y = pd.DataFrame(df_true)
+    aux_y.reset_index(inplace=True)
+    aux_y.drop(["index"], inplace=True, axis=1)
+    aux_y_pred = pd.DataFrame(df_pred)
+    aux_y_pred.reset_index(inplace=True)
+    aux_y_pred.drop(["index"], inplace=True, axis=1)
+    frames = [aux_y, aux_y_pred]
+    result = pd.concat(frames, axis=1)
+    result.columns = ["y_true", "y_predicted"]
+    result["y_true_10"] = 10 ** result.y_true
+    result["y_predicted_10"] = 10 ** result.y_predicted
+    result[result["y_true_10"] > 0.00001]
+    result[result["y_true_10"] > 0.0001]
+    return result
