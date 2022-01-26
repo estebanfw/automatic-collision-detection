@@ -21,3 +21,4 @@ envs
 report
 !/opt_parameters_ada_boost
 *.txt
+*.sav
