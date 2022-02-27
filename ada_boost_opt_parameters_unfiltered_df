@@ -1,0 +1,15 @@
+[CV 7/15; 1/100] END learning_rate=0.001, loss=exponential, n_estimators=100;, score=0.828 total time= 6.1min
+[CV 15/15; 1/100] END learning_rate=0.001, loss=exponential, n_estimators=100;, score=0.828 total time= 6.9min
+[CV 7/15; 2/100] END learning_rate=0.001, loss=exponential, n_estimators=300;, score=0.828 total time=19.4min
+[CV 9/15; 2/100] END learning_rate=0.001, loss=exponential, n_estimators=300;, score=0.828 total time=15.2min
+[CV 7/15; 3/100] END learning_rate=0.001, loss=exponential, n_estimators=500;, score=0.828 total time=25.4min
+[CV 9/15; 3/100] END learning_rate=0.001, loss=exponential, n_estimators=500;, score=0.828 total time=25.2min
+[CV 7/15; 4/100] END learning_rate=0.001, loss=exponential, n_estimators=800;, score=0.828 total time=40.7min
+[CV 9/15; 4/100] END learning_rate=0.001, loss=exponential, n_estimators=800;, score=0.828 total time=40.4min
+[CV 7/15; 11/100] END learning_rate=0.002, loss=exponential, n_estimators=100;, score=0.828 total time= 4.8min
+[CV 9/15; 12/100] END learning_rate=0.002, loss=exponential, n_estimators=300;, score=0.828 total time=14.6min
+[CV 7/15; 21/100] END learning_rate=0.003, loss=exponential, n_estimators=100;, score=0.828 total time= 5.0min
+[CV 9/15; 21/100] END learning_rate=0.003, loss=exponential, n_estimators=100;, score=0.828 total time= 5.0min
+[CV 9/15; 22/100] END learning_rate=0.003, loss=exponential, n_estimators=300;, score=0.828 total time=14.9min
+[CV 9/15; 1/30] END learning_rate=0.01, loss=exponential, n_estimators=100;, score=0.828 total time= 5.1min
+
