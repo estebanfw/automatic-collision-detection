@@ -65,6 +65,9 @@ cdm=cdm[ ['__time_to_tca'] + [ col for col in cdm.columns if col != '__time_to_t
 #SORT DATAFRAME BY event_id AND THEN BY __time_to_tca DESCENDING
 cdm.sort_values(by=['event_id', '__time_to_tca'],ascending=[True, False],inplace=True)
 
+# COLUMN TO PREDICT
+cdm["TARGET_PC"] = cdm["COLLISSION_PROBABILITY"].shift(-1)
+
 
 # FEATURE ENGINEERING
 print("-----------------------------------------------------------")
@@ -78,7 +81,7 @@ print("gradients...")
 print("............................................................")
 ################## COLLISSION_PROBABILITY ##################
 # (PC_i + PC_i-1 + PC_i-2) / 3 (MOVING AVERAGE WINDOW 3)
-cdm["PC_mavg_1"]=(cdm["COLLISSION_PROBABILITY"]+cdm["COLLISSION_PROBABILITY"].shift(1)+cdm["COLLISSION_PROBABILITY"].shift(2))/3
+#cdm["PC_mavg_1"]=(cdm["COLLISSION_PROBABILITY"]+cdm["COLLISSION_PROBABILITY"].shift(1)+cdm["COLLISSION_PROBABILITY"].shift(2))/3
 # PC_i - P_i-1 (TREND)
 cdm["PC_trend_1"]=cdm["COLLISSION_PROBABILITY"]-cdm["COLLISSION_PROBABILITY"].shift(1)
 # PC_i - P_i-3 (TREND)
@@ -90,7 +93,7 @@ cdm["PC_gradient_3"]=(cdm["COLLISSION_PROBABILITY"]-cdm["COLLISSION_PROBABILITY"
 
 ################## MISS_DISTANCE ##################
 # ( _i + _i-1 + _i-2) / 3 (MOVING AVERAGE WINDOW 3)
-cdm["MD_mavg_1"]=(cdm["MISS_DISTANCE"]+cdm["MISS_DISTANCE"].shift(1)+cdm["MISS_DISTANCE"].shift(2))/3
+#cdm["MD_mavg_1"]=(cdm["MISS_DISTANCE"]+cdm["MISS_DISTANCE"].shift(1)+cdm["MISS_DISTANCE"].shift(2))/3
 # _i - _i-1 (TREND)
 cdm["MD_trend_1"]=cdm["MISS_DISTANCE"]-cdm["MISS_DISTANCE"].shift(1)
 # _i -  _i-3 (TREND)
