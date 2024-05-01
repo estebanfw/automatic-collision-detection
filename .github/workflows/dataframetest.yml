@@ -19,9 +19,7 @@ jobs:
         wget https://kelvins.esa.int/media/public/competitions/collision-avoidance-challenge/train_data.zip
         unzip train_data.zip
         cp train_data.csv data/
-        print("ls -lh")
         ls -lh 
-        print("ls -lh data")
         ls -lh data/
         
     - name: Install dependencies
