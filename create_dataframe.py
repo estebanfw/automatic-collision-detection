@@ -1,8 +1,16 @@
 """Import Pandas and custom packages"""
+import logging
 import pandas as pd
+from pandas import DataFrame
 import data_handling as dh
 from cdm import Event, Cdm
 
+# Configuration of logging
+logging.basicConfig(format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+logger = logging.getLogger()
+logger.setLevel(level=logging.INFO)
+
+# Inputs
 fields = [
     "event_id",
     "time_to_tca",
@@ -21,22 +29,20 @@ fields = [
 PATH = "./data/train_data.csv"
 
 
-def get_cdm_from_event_id(event):
+def get_cdm_from_event_id(uevent: int,listofcdms: list) -> list:
     """Get cdm based on event_id
 
     Args:
         event (int): event_id
     """
     x1 = []
-    # print(f"CDMs for event_id:{event}")
-    for report in cdm_list:
-        if report.event_id == event:
-            # print(report.__dict__)
+    for report in listofcdms:
+        if report.event_id == uevent:
             x1.append(report.__dict__)
     return x1
 
 
-def get_closest_cdm_to_tca_by_event_id(event: Event) -> dict:
+def get_closest_cdm_to_tca_by_event_id(event: Event, listofcdms: list) -> dict:
     """Retrieves last cdm of event object
 
     Args:
@@ -45,15 +51,21 @@ def get_closest_cdm_to_tca_by_event_id(event: Event) -> dict:
     Returns:
         dict: last cdm
     """
-    list_of_cdm_of_event = get_cdm_from_event_id(event)
+    list_of_cdm_of_event = get_cdm_from_event_id(event, listofcdms)
     cdm_sorted = sorted(
         list_of_cdm_of_event, key=lambda x: x["time_to_tca"], reverse=True
     )
     closest_cdm_to_tca = cdm_sorted.pop()
     return closest_cdm_to_tca
 
+def main() -> DataFrame:
+    """Main run of script
 
-if __name__ == "__main__":
+    Returns:
+        DataFrame: curated dataframe
+    """
+    logger.info("Start the execution of the script")
+    logger.info("Loading raw data")
     # Load dataframe
     df = dh.load_data(PATH, fields)
 
@@ -83,19 +95,31 @@ if __name__ == "__main__":
             mahalanobis_distance=df["mahalanobis_distance"][row],
         )
         cdm_list.append(cdm_object)
-
+    
+    # Crete event list of dictionaries
     events_list_dict = []
     for event in events_list:
         events_list_dict.append(event.__dict__)
 
+    # Create list of dataframes
+    # The last CDM is lost and its miss distance is added as a column TARGET_MD
+    logger.info("Building curated Dataframe")
     list_of_dataframes = []
     for event in range(len(events_list)):
-        event_df = pd.DataFrame(get_cdm_from_event_id(event)).iloc[:-1, :]
-        event_df["TARGET_MD"] = get_closest_cdm_to_tca_by_event_id(event).get(
+        event_df = pd.DataFrame(get_cdm_from_event_id(event, cdm_list)).iloc[:-1, :]
+        event_df["TARGET_MD"] = get_closest_cdm_to_tca_by_event_id(event, cdm_list).get(
             "miss_distance"
         )
         list_of_dataframes.append(event_df)
 
     result = pd.concat(list_of_dataframes)
+    logger.info("Dataframe built")
 
+    # Save Dataframe
     result.to_pickle("./dataframe_prueba.pkl")
+    logger.info("Dataframe saved to file.")
+    
+    return result
+
+if __name__ == "__main__":
+    main()
