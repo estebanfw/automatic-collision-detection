@@ -1,9 +1,5 @@
 """Import packages"""
-
-import sys
-import getopt
 import logging
-import pandas as pd
 from pandas import DataFrame
 import numpy as np
 
@@ -29,20 +25,20 @@ def training(input_df: DataFrame):
     Returns:
         _type_: train, test, model
     """
-    TEST_SIZE = 0.30
-    SEED = 42
+    test_size_value = 0.30
+    seed_value = 42
     logger.info("Splitting input datrafame in train and test samples")
-    logger.info("Test size %s with randon_state=%s", TEST_SIZE, SEED)
-    train, test = train_test_split(input_df, test_size=TEST_SIZE, random_state=SEED)
+    logger.info("Test size %s with randon_state=%s", test_size_value, seed_value)
+    train, test = train_test_split(input_df, test_size=test_size_value, random_state=seed_value)
     df = train
     logger.info("Train dataframe dimension %s x %s", train.shape[0], train.shape[1])
     logger.info("Test dataframe dimension %s x %s", test.shape[0], test.shape[1])
 
     field_to_predict = "TARGET_MD"
     logger.info("Field to predict %s", field_to_predict)
-    Y_df = df[field_to_predict]
-    X_df = df.drop([field_to_predict], axis=1)
-    x, y = np.array(X_df), np.array(Y_df)
+    y_df = df[field_to_predict]
+    x_df = df.drop([field_to_predict], axis=1)
+    x, y = np.array(x_df), np.array(y_df)
 
     logger.info("Starting fitting of Linear Regression Model")
     model = LinearRegression().fit(x, y)
