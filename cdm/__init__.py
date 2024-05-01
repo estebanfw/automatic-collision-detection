@@ -1,7 +1,4 @@
 """cdm package"""
-
-""" Pandas Package"""
-import pandas as pd
 from pandas import DataFrame
 
 

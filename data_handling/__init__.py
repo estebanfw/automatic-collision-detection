@@ -1,6 +1,4 @@
 """ data handling package"""
-
-""" Pandas module """
 import pandas as pd
 from pandas import DataFrame
 
