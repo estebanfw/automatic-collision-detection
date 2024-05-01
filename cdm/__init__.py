@@ -6,6 +6,7 @@ class Event:
     """Event Class
     Conjunction Event Class
     """
+    # pylint: disable=too-few-public-methods
 
     def __init__(self, event_id):
         self.event_id = event_id
@@ -13,6 +14,9 @@ class Event:
 
 class Cdm(Event):
     """cdm class"""
+    # pylint: disable=too-few-public-methods
+    # pylint: disable=too-many-instance-attributes
+    # pylint: disable=too-many-arguments
 
     def __init__(
         self,
