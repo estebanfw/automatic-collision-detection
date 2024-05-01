@@ -1,4 +1,5 @@
 """Import Pandas and custom packages"""
+
 import logging
 import pandas as pd
 from pandas import DataFrame
@@ -6,7 +7,9 @@ import data_handling as dh
 from cdm import Event, Cdm
 
 # Configuration of logging
-logging.basicConfig(format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(
+    format="[%(asctime)s] %(levelname)s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+)
 logger = logging.getLogger()
 logger.setLevel(level=logging.INFO)
 
@@ -29,7 +32,7 @@ fields = [
 PATH = "./data/train_data.csv"
 
 
-def get_cdm_from_event_id(uevent: int,listofcdms: list) -> list:
+def get_cdm_from_event_id(uevent: int, listofcdms: list) -> list:
     """Get cdm based on event_id
 
     Args:
@@ -57,6 +60,7 @@ def get_closest_cdm_to_tca_by_event_id(event: Event, listofcdms: list) -> dict:
     )
     closest_cdm_to_tca = cdm_sorted.pop()
     return closest_cdm_to_tca
+
 
 def main() -> DataFrame:
     """Main run of script
@@ -95,7 +99,7 @@ def main() -> DataFrame:
             mahalanobis_distance=df["mahalanobis_distance"][row],
         )
         cdm_list.append(cdm_object)
-    
+
     # Crete event list of dictionaries
     events_list_dict = []
     for event in events_list:
@@ -118,8 +122,9 @@ def main() -> DataFrame:
     # Save Dataframe
     result.to_pickle("./dataframe_prueba.pkl")
     logger.info("Dataframe saved to file.")
-    
+
     return result
+
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,5 @@
 """Import packages"""
+
 import sys
 import getopt
 import logging
@@ -12,7 +13,9 @@ from sklearn.metrics import r2_score, mean_absolute_error, root_mean_squared_err
 from sklearn.model_selection import train_test_split
 
 # Configuration of logging
-logging.basicConfig(format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+logging.basicConfig(
+    format="[%(asctime)s] %(levelname)s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+)
 logger = logging.getLogger()
 logger.setLevel(level=logging.INFO)
 
@@ -26,19 +29,19 @@ def training(input_df: DataFrame):
     Returns:
         _type_: train, test, model
     """
-    TEST_SIZE=0.30
-    SEED=42
+    TEST_SIZE = 0.30
+    SEED = 42
     logger.info("Splitting input datrafame in train and test samples")
     logger.info("Test size %s with randon_state=%s", TEST_SIZE, SEED)
     train, test = train_test_split(input_df, test_size=TEST_SIZE, random_state=SEED)
-    df=train
-    logger.info("Train dataframe dimension %s x %s",train.shape[0],train.shape[1])
-    logger.info("Test dataframe dimension %s x %s",test.shape[0],test.shape[1])
- 
-    field_to_predict="TARGET_MD"
+    df = train
+    logger.info("Train dataframe dimension %s x %s", train.shape[0], train.shape[1])
+    logger.info("Test dataframe dimension %s x %s", test.shape[0], test.shape[1])
+
+    field_to_predict = "TARGET_MD"
     logger.info("Field to predict %s", field_to_predict)
     Y_df = df[field_to_predict]
-    X_df= df.drop([field_to_predict], axis=1)
+    X_df = df.drop([field_to_predict], axis=1)
     x, y = np.array(X_df), np.array(Y_df)
 
     logger.info("Starting fitting of Linear Regression Model")
@@ -46,13 +49,14 @@ def training(input_df: DataFrame):
     logger.info("Linear Regression model has been built!")
     logger.info("Printing metrics of the model")
     r_sq = model.score(x, y)
-    print('coefficient of determination:', r_sq)
-    print('intercept:', model.intercept_)
-    print('slope:', model.coef_)
+    print("coefficient of determination:", r_sq)
+    print("intercept:", model.intercept_)
+    print("slope:", model.coef_)
 
     return train, test, model
 
-def testing(model,test):
+
+def testing(model, test):
     """Linear Regression Testing
 
     Args:
@@ -62,14 +66,14 @@ def testing(model,test):
     Returns:
         _type_: predicted values as dataframe
     """
-    field_to_predict="TARGET_MD"
+    field_to_predict = "TARGET_MD"
     y_test = test[field_to_predict]
-    x_test= test.drop([field_to_predict], axis=1)
+    x_test = test.drop([field_to_predict], axis=1)
     logger.info("Running prediction")
-    prediction=model.predict(x_test)
+    prediction = model.predict(x_test)
     logger.info("Computing prediction metrics")
     print("The r2 of prediction is:", r2_score(y_test, prediction))
-    print("The MSE of prediction is:", root_mean_squared_error(y_test, prediction)**2)
+    print("The MSE of prediction is:", root_mean_squared_error(y_test, prediction) ** 2)
     print("The RMSE of prediction is:", root_mean_squared_error(y_test, prediction))
     print("The MAE of prediction is:", mean_absolute_error(y_test, prediction))
     logger.info("Run finished!")
