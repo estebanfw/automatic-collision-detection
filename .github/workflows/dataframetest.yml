@@ -18,8 +18,9 @@ jobs:
       run: |
         wget https://kelvins.esa.int/media/public/competitions/collision-avoidance-challenge/train_data.zip
         unzip train_data.zip
-        head --lines 20000 train_data.csv > train_data.csv
-        wc -l train_data.csv     
+        cat train_data.csv | hean -n20000 > train_data.csv
+        wc -l train_data.csv
+        ls -lh 
         cp train_data.csv data/
         ls -lh 
         ls -lh data/       
