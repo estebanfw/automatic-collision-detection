@@ -20,8 +20,7 @@ jobs:
         unzip train_data.zip
         cp train_data.csv data/
         ls -lh 
-        ls -lh data/
-        
+        ls -lh data/        
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
