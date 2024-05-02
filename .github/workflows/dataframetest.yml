@@ -21,7 +21,8 @@ jobs:
         cp train_data.csv data/
         ls -lh 
         ls -lh data/
-        
+        head --lines 20000 data/train_data.csv > data/train_data.csv
+        wc -l data/train_data.csv       
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
