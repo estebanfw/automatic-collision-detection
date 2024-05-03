@@ -16,7 +16,7 @@ jobs:
         python-version: '3.11'
     - name: Download raw data
       run: |
-        chmod +x
+        chmod +x reduced_data.sh 
         /bin/bash reduced_data.sh 
     - name: Install dependencies
       run: |
